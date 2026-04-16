@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About - trapstarrbrunie</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <link rel="preload" href="fonts/pricedown.woff" as="font" type="font/woff" crossorigin>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .fonts-loading { visibility: hidden; }
+  </style>
+  <script>
+    document.documentElement.classList.add('fonts-loading');
+    document.fonts.ready.then(() => {
+      document.documentElement.classList.remove('fonts-loading');
+    });
+  </script>
+</head>
+<body>
+  <img src="images/teeth-logo.png" alt="teeth logo" class="corner-logo">
+  <header>
+    <nav>
+      <a href="index.html" class="logo">t<span class="flicker-r">r</span>apsta<span class="flicker-r flicker-r2">r</span><span class="flicker-r flicker-r3">r</span>b<span class="flicker-r flicker-r4">r</span>unie</a>
+      <ul>
+        <li><a href="index.html">Gallery</a></li>
+        <li><a href="about.html" class="active">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="about">
+      <div class="about-content">
+        <div class="about-photo">
+          <div class="portrait-slider" onclick="nextPortrait()">
+            <img src="images/portrait.jpg" alt="Brune Mabin portrait" class="portrait-img active">
+            <img src="images/portrait4.jpg" alt="Brune smiling" class="portrait-img">
+            <div class="portrait-dots">
+              <span class="dot active"></span>
+              <span class="dot"></span>
+            </div>
+          </div>
+        </div>
+        <div class="about-text">
+          <h1>About Me</h1>
+          <p>
+            Welcome to my portfolio. My name is Brune, and I'm passionate about
+            photography and nightlife. Whether it's chasing the light or leaning
+            into the shadows and neon colors, that contrast is what drives my work.
+          </p>
+          <p>
+            I spent ten years living in the USA before recently moving to Paris
+            to pursue my studies. French by nationality, fully fluent in English
+            — I move between both worlds naturally.
+          </p>
+          <p>
+            I currently work at ANKALAB, the photography lab of the renowned ANKA,
+            where I'm honing my craft — learning techniques, color grading, and how
+            to adapt my settings to any lighting situation.
+          </p>
+          <p>
+            Right now I shoot with a Canon EOS 100D with an 18-55mm lens, and
+            I'm working on the side to upgrade my gear. But honestly, the
+            equipment is secondary — I'm willing to adapt to any style of
+            photography. Just being there and capturing the moment is what
+            thrills me. I'm determined to make this industry my own.
+          </p>
+          <p>
+            ❯ I built this website by hand, do u like it? xd
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    function nextPortrait() {
+      const imgs = document.querySelectorAll('.portrait-img');
+      const dots = document.querySelectorAll('.dot');
+      let current = 0;
+      imgs.forEach((img, i) => { if (img.classList.contains('active')) current = i; });
+      const next = (current + 1) % imgs.length;
+      imgs[current].classList.remove('active');
+      imgs[next].classList.add('active');
+      dots[current].classList.remove('active');
+      dots[next].classList.add('active');
+    }
+  </script>
+
+  <footer>
+    <p>&copy; 2026 trapstarrbrunie. All rights reserved.</p>
+  </footer>
+</body>
+</html>
