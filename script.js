@@ -2,21 +2,21 @@
 const lightbox = document.getElementById('lightbox');
 const lightboxImg = document.getElementById('lightbox-img');
 const lightboxCaption = document.getElementById('lightbox-caption');
-const galleryItems = document.querySelectorAll('.gallery-item');
 
 let currentIndex = 0;
 const images = [];
 
-// Collect all gallery images (skip placeholders)
-galleryItems.forEach((item, index) => {
-  const img = item.querySelector('img');
+// Collect gallery items AND loose imgs inside .full-photo
+const clickables = document.querySelectorAll('.gallery-item, .full-photo img');
+clickables.forEach((el) => {
+  const img = el.tagName === 'IMG' ? el : el.querySelector('img');
   if (!img) return;
-
-  const caption = item.querySelector('figcaption')?.textContent || '';
+  const caption = el.tagName === 'IMG'
+    ? (el.parentElement?.querySelector('figcaption')?.textContent || '')
+    : (el.querySelector('figcaption')?.textContent || '');
   images.push({ src: img.src, alt: img.alt, caption });
-
-  item.addEventListener('click', () => {
-    currentIndex = images.indexOf(images.find(i => i.src === img.src));
+  el.addEventListener('click', () => {
+    currentIndex = images.findIndex(i => i.src === img.src);
     openLightbox();
   });
 });

@@ -18,8 +18,7 @@
     });
   </script>
 </head>
-<body>
-  <img src="images/teeth-logo.png" alt="teeth logo" class="corner-logo">
+<body class="with-scanline">
   <header>
     <nav>
       <a href="index.html" class="logo">t<span class="flicker-r">r</span>apsta<span class="flicker-r flicker-r2">r</span><span class="flicker-r flicker-r3">r</span>b<span class="flicker-r flicker-r4">r</span>unie</a>
@@ -35,42 +34,79 @@
     <section class="about">
       <div class="about-content">
         <div class="about-photo">
-          <div class="portrait-slider" onclick="nextPortrait()">
+          <div class="portrait-slider">
             <img src="images/portrait.jpg" alt="Brune Mabin portrait" class="portrait-img active">
-            <img src="images/portrait4.jpg" alt="Brune smiling" class="portrait-img">
-            <div class="portrait-dots">
-              <span class="dot active"></span>
-              <span class="dot"></span>
-            </div>
           </div>
         </div>
         <div class="about-text">
-          <h1>About Me</h1>
-          <p>
-            Welcome to my portfolio. My name is Brune, and I'm passionate about
-            photography and nightlife. Whether it's chasing the light or leaning
-            into the shadows and neon colors, that contrast is what drives my work.
-          </p>
-          <p>
-            I spent ten years living in the USA before recently moving to Paris
-            to pursue my studies. French by nationality, fully fluent in English
-            — I move between both worlds naturally.
-          </p>
-          <p>
-            I currently work at ANKALAB, the photography lab of the renowned ANKA,
-            where I'm honing my craft — learning techniques, color grading, and how
-            to adapt my settings to any lighting situation.
-          </p>
-          <p>
-            Right now I shoot with a Canon EOS 100D with an 18-55mm lens, and
-            I'm working on the side to upgrade my gear. But honestly, the
-            equipment is secondary — I'm willing to adapt to any style of
-            photography. Just being there and capturing the moment is what
-            thrills me. I'm determined to make this industry my own.
-          </p>
-          <p>
-            ❯ I built this website by hand, do u like it? xd
-          </p>
+          <div class="lang-toggle">
+            <button type="button" class="lang-btn active" data-lang="fr">FR</button>
+            <span class="lang-sep">/</span>
+            <button type="button" class="lang-btn" data-lang="en">ENG</button>
+          </div>
+
+          <div class="lang-content" data-lang-content="fr">
+            <h1>about me</h1>
+            <p>Je m'appelle Brune.</p>
+            <p>Bienvenue dans mon univers.</p>
+            <p>
+              La photographie est mon langage, la nuit mon terrain de jeu.
+              J'aime les contrastes : la lumière qui échappe, les ombres qui
+              s'imposent, les néons qui transforment une scène ordinaire en
+              instant suspendu.
+            </p>
+            <p>
+              J'ai vécu dix ans aux États-Unis avant de m'installer à Paris
+              pour poursuivre mes études. Française de nationalité et
+              parfaitement bilingue, je navigue naturellement entre ces deux
+              univers.
+            </p>
+            <p>
+              Aujourd'hui, je travaille chez ANKALAB, reconnu pour son
+              expertise et ses collaborations à l'international. J'y affine
+              mon regard et ma technique, entre maîtrise de la lumière,
+              travail des couleurs et adaptation à chaque situation, chaque
+              ambiance, chaque imprévu.
+            </p>
+            <p>
+              Je photographie avec un Canon EOS 100D et un objectif 18–55 mm.
+              Le matériel évoluera. L'essentiel est ailleurs. Dans le regard.
+              Dans l'instant. Dans cette capacité à saisir ce qui ne se
+              rejoue pas.
+            </p>
+            <p>Je m'adapte à tous les styles, à tous les environnements.</p>
+            <p>Être là. Voir. Capturer.</p>
+            <p>À vous d'écrire la suite.</p>
+          </div>
+
+          <div class="lang-content" data-lang-content="en" hidden>
+            <h1>about me</h1>
+            <p>
+              Welcome to my portfolio. My name is Brune, and I'm passionate about
+              photography and nightlife. Whether it's chasing the light or leaning
+              into the shadows and neon colors, that contrast is what drives my work.
+            </p>
+            <p>
+              I spent ten years living in the USA before recently moving to Paris
+              to pursue my studies. French by nationality, fully fluent in English
+              — I move between both worlds naturally.
+            </p>
+            <p>
+              I currently work at ANKALAB, the photography lab of the renowned ANKA,
+              where I'm honing my craft — learning techniques, color grading, and how
+              to adapt my settings to any lighting situation.
+            </p>
+            <p>
+              Right now I shoot with a Canon EOS 100D with an 18-55mm lens, and
+              I'm working on the side to upgrade my gear. But honestly, the
+              equipment is secondary — I'm willing to adapt to any style of
+              photography. Just being there and capturing the moment is what
+              thrills me. I'm determined to make this industry my own.
+            </p>
+            <p>
+              ❯ I built this website by hand, do u like it? xd
+            </p>
+          </div>
         </div>
       </div>
     </section>
@@ -88,6 +124,18 @@
       dots[current].classList.remove('active');
       dots[next].classList.add('active');
     }
+
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const lang = btn.dataset.lang;
+        document.querySelectorAll('.lang-btn').forEach(b => {
+          b.classList.toggle('active', b.dataset.lang === lang);
+        });
+        document.querySelectorAll('.lang-content').forEach(c => {
+          c.hidden = c.dataset.langContent !== lang;
+        });
+      });
+    });
   </script>
 
   <footer>

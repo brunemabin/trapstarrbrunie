@@ -5,7 +5,7 @@
   box-sizing: border-box;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=VT323&family=Share+Tech+Mono&display=swap');
 
 @font-face {
   font-family: 'Pricedown';
@@ -16,19 +16,19 @@
 }
 
 :root {
-  --color-bg: #0a0a0a;
-  --color-bg-dark: #050505;
+  --color-bg: #000000;
+  --color-bg-dark: #000000;
   --color-neon-blue: #00ccff;
-  --color-neon-red: #ff1a1a;
-  --color-blue-dim: #0099cc;
-  --color-red-dim: #cc1111;
-  --color-text: #e0e0e0;
-  --color-text-light: #aaaaaa;
-  --color-border: #1a1a1a;
+  --color-neon-red: #0033ff;
+  --color-blue-dim: #0022aa;
+  --color-red-dim: #0033ff;
+  --color-text: #0033ff;
+  --color-text-light: #0022aa;
+  --color-border: #0022aa;
   --font-main: 'Share Tech Mono', 'Courier New', monospace;
   --font-title: 'Pricedown', 'VT323', 'Courier New', sans-serif;
-  --glow-blue: 0 0 10px #00ccff, 0 0 20px #00ccff, 0 0 40px #00ccff44;
-  --glow-red: 0 0 10px #ff1a1a, 0 0 20px #ff1a1a, 0 0 40px #ff1a1a44;
+  --glow-blue: none;
+  --glow-red: none;
   --glow-blue-strong: 0 0 7px #fff, 0 0 10px #fff, 0 0 21px #fff, 0 0 42px #00ccff, 0 0 82px #00ccff, 0 0 92px #00ccff, 0 0 102px #00ccff, 0 0 151px #00ccff;
 }
 
@@ -41,8 +41,8 @@ body {
   min-height: 100vh;
 }
 
-/* Scanline overlay */
-body::after {
+/* Scanline overlay (non-gallery pages) */
+body.with-scanline::after {
   content: '';
   position: fixed;
   inset: 0;
@@ -61,10 +61,10 @@ body::after {
 header {
   position: sticky;
   top: 0;
-  background: rgba(5, 5, 5, 0.9);
+  background: rgba(0, 0, 0, 0.9);
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--color-neon-blue);
-  box-shadow: 0 1px 15px rgba(0, 204, 255, 0.15);
+  border-bottom: 1px solid #0033aa;
+  box-shadow: 0 1px 15px rgba(0, 51, 170, 0.2);
   z-index: 100;
 }
 
@@ -82,14 +82,29 @@ nav .logo {
 
 .logo {
   font-family: var(--font-title);
-  font-size: 1.8rem;
+  font-size: 1rem;
   font-weight: 700;
   text-decoration: none;
-  color: var(--color-neon-blue);
+  color: #ff1a1a;
   letter-spacing: 0.05em;
   text-transform: lowercase;
-  text-shadow: none;
-  animation: none;
+  text-shadow: 0 0 8px #ff1a1a, 0 0 15px rgba(255, 26, 26, 0.5);
+  animation: logo-flicker 5s infinite;
+}
+
+@keyframes logo-flicker {
+  0%, 88%, 100% {
+    color: #ff1a1a;
+    text-shadow: 0 0 8px #ff1a1a, 0 0 15px rgba(255, 26, 26, 0.5);
+  }
+  89%, 91%, 93% {
+    color: #00ccff;
+    text-shadow: 0 0 8px #00ccff, 0 0 15px rgba(0, 204, 255, 0.5);
+  }
+  90%, 92%, 94% {
+    color: #ff1a1a;
+    text-shadow: 0 0 8px #ff1a1a, 0 0 15px rgba(255, 26, 26, 0.5);
+  }
 }
 
 .flicker-r {
@@ -117,7 +132,7 @@ nav ul {
 }
 
 nav ul li a {
-  font-size: 0.9rem;
+  font-size: 1rem;
   display: inline-block;
   min-width: 70px;
   text-align: center;
@@ -126,10 +141,11 @@ nav ul li a {
 nav a {
   text-decoration: none;
   color: var(--color-red-dim);
-  font-size: 0.9rem;
-  font-family: var(--font-main);
+  font-size: 1rem;
+  font-family: var(--font-title);
   transition: all 0.2s;
   text-transform: lowercase;
+  letter-spacing: 0.05em;
 }
 
 nav a:hover {
@@ -159,18 +175,45 @@ main {
 }
 
 .hero h1 {
-  font-family: var(--font-title);
-  font-size: 2.5rem;
+  font-family: 'Anton', 'Impact', sans-serif;
+  font-size: 3.5rem;
   font-weight: 400;
   margin-bottom: 1rem;
-  color: var(--color-neon-blue);
+  color: transparent;
   text-shadow: none;
-  text-transform: none;
-  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  letter-spacing: 0;
   display: inline-block;
   position: relative;
-  border: 2px solid var(--color-neon-red);
   padding: 0.4rem 1rem;
+  line-height: 0.95;
+}
+
+.hero h1::before,
+.hero h1::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  padding: inherit;
+  color: var(--color-neon-red);
+  pointer-events: none;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  line-height: inherit;
+}
+
+.hero h1::before {
+  -webkit-clip-path: polygon(0 0, 100% 0, 100% 55%, 0 38%);
+  clip-path: polygon(0 0, 100% 0, 100% 55%, 0 38%);
+}
+
+.hero h1::after {
+  -webkit-clip-path: polygon(0 44%, 100% 61%, 100% 100%, 0 100%);
+  clip-path: polygon(0 44%, 100% 61%, 100% 100%, 0 100%);
 }
 
 .corner-logo {
@@ -184,11 +227,59 @@ main {
 }
 
 .hero p {
-  color: var(--color-neon-blue);
+  color: var(--color-neon-red);
   font-size: 1rem;
   letter-spacing: 0.15em;
   text-transform: lowercase;
-  text-shadow: var(--glow-blue);
+  text-shadow: var(--glow-red);
+}
+
+/* === Full-size photo === */
+.full-photo {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem 2rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+.full-photo-item {
+  flex: 0 0 auto;
+  width: min(32vw, 420px);
+  display: flex;
+  flex-direction: column;
+}
+
+.full-photo-item img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  display: block;
+  cursor: pointer;
+}
+
+.full-photo-item figcaption {
+  padding: 0.5rem 0 0;
+  font-size: 0.9rem;
+  letter-spacing: 0.1em;
+  text-align: left;
+  color: var(--color-text);
+}
+
+.full-photo::-webkit-scrollbar {
+  height: 6px;
+}
+
+.full-photo::-webkit-scrollbar-track {
+  background: var(--color-bg-dark);
+  border-radius: 4px;
+}
+
+.full-photo::-webkit-scrollbar-thumb {
+  background: var(--color-neon-red);
+  border-radius: 4px;
 }
 
 /* === Gallery === */
@@ -236,7 +327,7 @@ main {
   cursor: pointer;
   transition: all 0.3s;
   border: 1px solid var(--color-border);
-  background: rgba(5, 5, 10, 0.6);
+  background: rgba(0, 0, 0, 0.8);
   overflow: hidden;
   flex: 0 0 auto;
   width: 400px;
@@ -265,7 +356,7 @@ main {
 .gallery-item figcaption {
   padding: 0.75rem 1rem;
   font-size: 0.8rem;
-  color: var(--color-neon-blue);
+  color: var(--color-neon-red);
   letter-spacing: 0.1em;
   text-transform: lowercase;
   border-top: 1px solid var(--color-border);
@@ -283,7 +374,7 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--color-blue-dim);
+  color: var(--color-red-dim);
   font-size: 1.1rem;
 }
 
@@ -309,20 +400,25 @@ main {
 }
 
 .lightbox-img {
-  max-width: 90vw;
-  max-height: 80vh;
+  width: 100vw;
+  height: 100vh;
+  max-width: 100vw;
+  max-height: 100vh;
   object-fit: contain;
-  border: 1px solid var(--color-neon-blue);
-  box-shadow: 0 0 30px rgba(0, 204, 255, 0.15);
+  border: none;
 }
 
 .lightbox-caption {
-  color: var(--color-neon-red);
-  margin-top: 1.5rem;
-  font-size: 0.85rem;
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fff;
+  font-size: 0.9rem;
   letter-spacing: 0.15em;
   text-transform: lowercase;
-  text-shadow: 0 0 8px rgba(255, 26, 26, 0.4);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+  margin: 0;
 }
 
 .lightbox-close,
@@ -446,19 +542,57 @@ main {
 
 .about-text h1 {
   font-family: var(--font-title);
-  font-size: 1.2rem;
+  font-size: 1.7rem;
   font-weight: 400;
   margin-bottom: 1.5rem;
-  color: var(--color-neon-red);
-  text-shadow: var(--glow-red);
+  color: #ff1a1a;
+  text-shadow: 0 0 10px #ff1a1a, 0 0 20px #ff1a1a, 0 0 40px rgba(255, 26, 26, 0.4);
   text-transform: lowercase;
 }
 
 .about-text p {
-  color: var(--color-neon-blue);
+  color: #00ccff;
+  text-shadow: 0 0 8px rgba(0, 204, 255, 0.4);
   margin-bottom: 1.5rem;
   max-width: 100%;
   line-height: 1.8;
+}
+
+/* === Language toggle === */
+.lang-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 1.5rem;
+  font-family: var(--font-main);
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+}
+
+.lang-btn {
+  background: none;
+  border: none;
+  color: #00ccff;
+  text-shadow: 0 0 8px rgba(0, 204, 255, 0.4);
+  cursor: pointer;
+  padding: 0.1rem 0.3rem;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+
+.lang-btn.active {
+  color: #00ccff;
+  text-decoration: underline;
+}
+
+.lang-btn:hover {
+  color: #00ccff;
+}
+
+.lang-sep {
+  color: #00ccff;
 }
 
 /* === Contact === */
@@ -470,16 +604,16 @@ main {
 
 .contact h1 {
   font-family: var(--font-title);
-  font-size: 1.2rem;
+  font-size: 1.7rem;
   font-weight: 400;
   margin-bottom: 0.75rem;
-  color: var(--color-neon-red);
-  text-shadow: var(--glow-red);
+  color: #ff1a1a;
+  text-shadow: 0 0 10px #ff1a1a, 0 0 20px #ff1a1a, 0 0 40px rgba(255, 26, 26, 0.4);
   text-transform: lowercase;
 }
 
 .contact > p {
-  color: var(--color-neon-blue);
+  color: var(--color-neon-red);
   margin-bottom: 2rem;
 }
 
@@ -507,10 +641,10 @@ main {
 .form-group textarea {
   padding: 0.75rem;
   border: 1px solid var(--color-border);
-  background: rgba(5, 5, 10, 0.8);
-  color: var(--color-neon-blue);
+  background: rgba(0, 0, 0, 0.9);
+  color: var(--color-neon-red);
   font-family: var(--font-main);
-  font-size: 0.95rem;
+  font-size: 1rem;
   transition: all 0.2s;
 }
 
@@ -561,8 +695,8 @@ main {
 footer {
   text-align: center;
   padding: 2rem;
-  color: var(--color-blue-dim);
-  font-size: 0.75rem;
+  color: var(--color-red-dim);
+  font-size: 1rem;
   border-top: 1px solid var(--color-border);
   letter-spacing: 0.1em;
 }
@@ -692,10 +826,6 @@ footer {
 
   .hero h1 {
     font-size: 1.8rem;
-  }
-
-  .logo {
-    font-size: 0.9rem;
   }
 
   nav {
