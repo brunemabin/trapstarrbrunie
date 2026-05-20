@@ -248,15 +248,16 @@ main {
 
 .full-photo-item {
   flex: 0 0 auto;
-  width: min(32vw, 420px);
+  height: 85vh;
   display: flex;
   flex-direction: column;
 }
 
 .full-photo-item img {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
+  width: auto;
+  height: 100%;
+  max-width: 95vw;
+  object-fit: contain;
   display: block;
   cursor: pointer;
 }
